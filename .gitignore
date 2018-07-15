@@ -1,0 +1,7 @@
+# editors
+.vscode/
+
+imap-commands/
+
+# python virtual environment
+venv/
