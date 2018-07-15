@@ -13,8 +13,7 @@ class SendEmail():
 
     smtp_send_template = """helo 0
 mail from:{sender_email}
-rcpt to:{receiver_list}
-data
+{receiver_list}data
 Subject:{subject}
 {header_list}
 {email_body}
@@ -65,17 +64,17 @@ quit
                 header.append('Bcc: %s' % bcc)
                 rcpt.append(bcc)
             elif isinstance(bcc, (list,)):
-                header.append('BCc: %s' % (",".join(bcc)))
+                header.append('Bcc: %s' % (",".join(bcc)))
                 rcpt.extend(bcc)
 
         cmd = ( SendEmail.smtp_send_template.format(
-            sender_email=sender_email, receiver_list=','.join(rcpt),
+            sender_email=sender_email, receiver_list='rcpt to:'.join([rcpt_to + '\n' for rcpt_to in rcpt]),
             subject=subject, email_body= body, header_list='\n'.join(header)
             )
         )
 
-        # os.system( 'echo "%s" | nc 0 25' % cmd )
-        print('%s' % cmd)
+        os.system('echo "%s" | nc 0 25' % cmd)
+        # print( cmd )
 
 
 if __name__ == '__main__':
