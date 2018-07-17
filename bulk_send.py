@@ -13,7 +13,7 @@ class SendEmail():
 
     smtp_send_template = """helo 0
 mail from:{sender_email}
-{receiver_list}data
+rcpt to:{receiver_list}data
 Subject:{subject}
 {header_list}
 {email_body}
